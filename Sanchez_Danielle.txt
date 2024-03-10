@@ -1,0 +1,5 @@
+Applicant Portal: 
+	This class is responsible for the applicant portal. Creates, Reviews, Updates and Deletes applicants. Allows for rejection or approval of applicants. If approved, applicants information goes to the employee class. 
+
+CloseApplication: 
+	This class is responsible for the proper shutdown of the application. Allows for the user to save progress & continue or to save & exit. 
