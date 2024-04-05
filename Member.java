@@ -101,11 +101,11 @@ public class Member {
      */
     @Override
     public String toString() {
-        return "Member{" +
+        return "Member" +
                 "ID=" + id +
                 ", Name='" + name + '\'' +
                 ", Address='" + address + '\'' +
                 ", Email='" + email + '\'' +
-                '}';
+                ' ';
     }
 }
