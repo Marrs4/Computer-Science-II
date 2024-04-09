@@ -1,3 +1,8 @@
+/**
+ * Provides a comprehensive service for managing members within the club.
+ * This service handles the creation, retrieval, updating, and deletion of member information,
+ * and starts with a predefined list of members upon initialization.
+ */
 public class MemberService {
     private Member[] members = new Member[100];
     private int memberCount = 0;

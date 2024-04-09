@@ -1,17 +1,29 @@
 import java.util.Scanner;
+/**
+ * Provides a console-based interface for managing employees within the club.
+ * This class allows for the creation, reading, updating, and deletion of employee records,
+ * as well as managing employee salaries, reviews, and schedules.
+ */
 public class EmployeeManagementPortal {
+    // Services for managing employee data and schedules
     private final EmployeeService employeeService = new EmployeeService();
     private final ManageEmployeeSchedule manageEmployeeSchedule = new ManageEmployeeSchedule(employeeService);
+    // Scanner for reading input from the console
     private final Scanner scanner = new Scanner(System.in);
 
     public EmployeeManagementPortal() {
-        // Initialization already done in the field declarations
+        // Constructor with field initializations done in declarations
     }
-
+    /**
+     * Starts the employee management interface. Presents a series of options to the user
+     * and processes the selected option. Continues to display the options after each operation
+     * until the user chooses to exit.
+     */
     public void manageEmployees() {
         boolean run = true;
 
         while (run) {
+            // Display menu options to the user
             System.out.println("\n--- Employee Management Portal ---");
             System.out.println("1. Create Employee");
             System.out.println("2. Read Employee");
@@ -24,6 +36,7 @@ public class EmployeeManagementPortal {
             System.out.println("9. Return to Main Menu");
             System.out.print("Enter your choice: ");
 
+            // Read and process the user's choice
             int choice = getIntInput();
 
             switch (choice) {
@@ -51,6 +64,7 @@ public class EmployeeManagementPortal {
                 case 8:
                     viewEmployeeReview();
                     break;
+                // Exit the management portal
                 case 9:
                     System.out.println("Exiting Employee Management Portal...");
                     run = false;
@@ -61,6 +75,9 @@ public class EmployeeManagementPortal {
         }
     }
 
+    /**
+     * Guides the user through the process of creating a new employee.
+     */
     private void createEmployee() {
         System.out.print("Enter Employee Name: ");
         String name = scanner.nextLine();
@@ -81,7 +98,9 @@ public class EmployeeManagementPortal {
         }
         employeeService.addEmployee(name, address, email, salary);
     }
-
+    /**
+     * Allows the user to read (view) details of a specific employee by their ID.
+     */
     private void readEmployee() {
         System.out.print("Enter Employee ID: ");
         int id = getIntInput();
@@ -93,6 +112,9 @@ public class EmployeeManagementPortal {
         }
     }
 
+    /**
+     * Facilitates updating an existing employee's information.
+     */
     private void updateEmployee() {
         System.out.print("Enter Employee ID to Update: ");
         int id = getIntInput();
@@ -116,19 +138,26 @@ public class EmployeeManagementPortal {
         employeeService.updateEmployee(id, name, address, email, salary);
     }
 
-
+    /**
+     * Enables the user to delete an employee from the system.
+     */
     private void deleteEmployee() {
         System.out.print("Enter Employee ID to delete: ");
         int id = getIntInput();
         employeeService.deleteEmployee(id);
     }
-
+    /**
+     * Views the salary of an employee.
+     */
     private void viewEmployeeSalary() {
         System.out.print("Enter Employee ID: ");
         int id = getIntInput();
         employeeService.viewSalary(id);
     }
 
+    /**
+     * Manages the scheduling interface for employee activities.
+     */
     private void manageEmployeeSchedule() {
         boolean running = true;
         while (running) {
@@ -158,6 +187,7 @@ public class EmployeeManagementPortal {
             }
         }
     }
+
     private void addEmployeeToSchedule() {
         System.out.print("Enter Employee ID: ");
         int employeeId = getIntInput();
@@ -179,7 +209,9 @@ public class EmployeeManagementPortal {
 
         manageEmployeeSchedule.removeEmployeeFromSchedule(date, activity, employeeId);
     }
-
+    /**
+     * Provides an interface to write a review for an employee.
+     */
     private void writeEmployeeReview() {
         System.out.print("Enter Employee ID: ");
         int id = getIntInput();
@@ -187,13 +219,20 @@ public class EmployeeManagementPortal {
         String review = scanner.nextLine();
         employeeService.writeReview(id, review);
     }
+    /**
+     * Displays the review of an employee.
+     */
     private void viewEmployeeReview() {
         System.out.print("Enter Employee ID to view the review: ");
         int id = getIntInput();
         String review = employeeService.viewReview(id);
         System.out.println("Review for Employee ID " + id + ": " + review);
     }
-
+    /**
+     * Reads an integer from the console input safely, asking again if input is not an integer.
+     *
+     * @return The user input as an integer.
+     */
     private int getIntInput() {
         while (true) {
             try {
