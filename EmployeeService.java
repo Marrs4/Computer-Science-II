@@ -1,7 +1,15 @@
 public class EmployeeService {
-    private Employee[] employees = new Employee[10];
+    private Employee[] employees = new Employee[100];
     private int employeeCount = 0;
 
+    public EmployeeService() {
+        // Pre-made employees
+        addEmployee("John Doe", "1234 Main St", "john.doe@example.com", 50000);
+        addEmployee("Jane Smith", "5678 Market Ave", "jane.smith@example.com", 55000);
+        addEmployee("Charlie Brown", "910 Pine St", "charlie.brown@example.com", 45000);
+        addEmployee("Diane Miller", "789 Elm St", "diane.miller@example.com", 52000);
+        addEmployee("Evan Rogers", "654 Oak St", "evan.rogers@example.com", 48000);
+    }
     public void addEmployee(String name, String address, String email, double salary) {
         if (employeeCount >= employees.length) {
             System.out.println("Employee list is full.");

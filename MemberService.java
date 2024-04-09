@@ -1,7 +1,15 @@
 public class MemberService {
-    private Member[] members = new Member[10]; // Fixed-size array for demonstration purposes
+    private Member[] members = new Member[100];
     private int memberCount = 0;
 
+    // Constructor to add pre-existing members
+    public MemberService() {
+        createMember("Alice Johnson", "7890 Pine Rd", "alice.johnson@example.com");
+        createMember("Bob Williams", "4321 Oak St", "bob.williams@example.com");
+        createMember("Charlie Smith", "1234 Maple St", "charlie.smith@example.com");
+        createMember("Diane Adams", "5678 Elm St", "diane.adams@example.com");
+        createMember("Evan Brown", "91011 Birch St", "evan.brown@example.com");
+    }
     /**
      * Creates and adds a new member to the service.
      *
