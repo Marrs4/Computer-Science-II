@@ -1,3 +1,4 @@
+
 /**
  * Manages the schedule of activities for members within the club.
  * This class facilitates adding members to scheduled activities, removing members from

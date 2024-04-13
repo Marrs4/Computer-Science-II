@@ -5,16 +5,16 @@ public class ApplicantManagement {
     private List<Applicant> applicants;
     private EmployeeService employeeService;
     private int applicantCount = 1;
-    
-    public ApplicantManagement(EmployeeService employeeService) {
+
+    public ApplicantManagement() {
         this.applicants = new ArrayList<>();
         this.employeeService = employeeService;
     }
-    
+
     public void addApplicant(Applicant applicant) {
         applicants.add(applicant);
     }
-    
+
     public Applicant getApplicantByName(String name) {
         for (Applicant applicant : applicants) {
             if (applicant.getName().equals(name)) {
@@ -23,7 +23,7 @@ public class ApplicantManagement {
         }
         return null;
     }
-    
+
     public void updateApplicant(Applicant updatedApplicant) {
         for (int i = 0; i < applicants.size(); i++) {
             if (applicants.get(i).getName().equals(updatedApplicant.getName())) {
@@ -32,32 +32,21 @@ public class ApplicantManagement {
             }
         }
     }
-    
+
     public void deleteApplicant(Applicant applicant) {
         applicants.remove(applicant);
     }
-    
+
     public void approveAndTransferApplicant(String applicantName) {
-    Applicant approvedApplicant = getApplicantByName(applicantName);
-    
+        Applicant approvedApplicant = getApplicantByName(applicantName);
+
         if (approvedApplicant != null && approvedApplicant.isApproved()) {
-        String name = approvedApplicant.getName();
-        String address = approvedApplicant.getAddress();
-        String email = approvedApplicant.getEmail();
-        double salary = 40000;//Default salary
-        int tempId = applicantCount++;
-        
-        Employee newEmployee = new Employee(tempId, name, address, email, salary);
-        
-        employeeService.addEmployee(name, address, email, salary);
-        
-        System.out.println("Applicant " + applicantName + " has been hired as an employee.");
-            
-        // Optional, you can remove the applicant from the list once transferred
-        deleteApplicant(approvedApplicant);
+            employeeService.addEmployee(approvedApplicant.getName(), approvedApplicant.getAddress(), approvedApplicant.getEmail(), 40000);  // Use EmployeeService to add the new employee
+
+            System.out.println("Applicant " + applicantName + " has been hired as an employee.");
+            deleteApplicant(approvedApplicant);  // Optionally remove the applicant
         } else {
-            System.out.println("Applicant " + applicantName + " is not found.");
+            System.out.println("Applicant " + applicantName + " is not found or not approved.");
         }
-        } 
+    }
 }
-    

@@ -161,7 +161,7 @@ public class EmployeeManagementPortal {
     private void manageEmployeeSchedule() {
         boolean running = true;
         while (running) {
-            System.out.println("\nEmployee Schedule Management");
+            System.out.println("\n--- Employee Schedule Management ---");
             System.out.println("1. Add Employee to Schedule");
             System.out.println("2. Remove Employee from Schedule");
             System.out.println("3. View Employee Schedule");

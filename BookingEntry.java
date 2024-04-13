@@ -33,10 +33,10 @@ public class BookingEntry {
      */
     @Override
     public String toString() {
-        return "BookingEntry{" +
+        return "BookingEntry" +
                 "date='" + date + '\'' +
                 ", hotelName='" + hotelName + '\'' +
                 ", memberId=" + memberId +
-                '}';
+                ' ';
     }
 }

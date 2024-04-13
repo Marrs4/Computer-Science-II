@@ -12,7 +12,7 @@ public class TravelManagementPortal {
     }
 
     public void manageTravel() {
-        System.out.println("Travel Management Portal");
+        System.out.println("--- Travel Management Portal ---");
         boolean run = true;
         while (run) {
             System.out.println("1. Hotel Bookings");

@@ -10,7 +10,7 @@ public class HotelBookingsPortal {
     }
 
     public void manageHotelBookings() {
-        System.out.println("Hotel Bookings Portal");
+        System.out.println("--- Hotel Bookings Portal ---");
         // Implement logic for managing hotel bookings here
         boolean run = true;
         while (run) {

@@ -1,3 +1,4 @@
+
 import java.util.Scanner;
 
 /**
@@ -33,7 +34,7 @@ public class MemberManagementPortal {
 
         while (run) {
             // Display the menu options to the user
-            System.out.println("\nMember Management Portal");
+            System.out.println("\n--- Member Management Portal ---");
             System.out.println("1. Create Member");
             System.out.println("2. Read Member");
             System.out.println("3. Update Member");
@@ -136,7 +137,7 @@ public class MemberManagementPortal {
      * Manages the addition, removal, and viewing of member schedules.
      */
     private void manageSchedule() {
-        System.out.println("\nMember Schedule Management");
+        System.out.println("\n--- Member Schedule Management ---");
         System.out.println("1. Add Member to Schedule");
         System.out.println("2. Remove Member from Schedule");
         System.out.println("3. View Schedule");
@@ -170,7 +171,7 @@ public class MemberManagementPortal {
         }
     }
     private void manageBooking() {
-        System.out.println("\nMember Booking Management");
+        System.out.println("\n--- Member Booking Management ---");
         System.out.println("1. Add Booking for Member");
         System.out.println("2. Remove Booking for Member");
         System.out.println("3. View Bookings");
