@@ -6,7 +6,7 @@ public class ApplicantManagement {
     private EmployeeService employeeService;
     private int applicantCount = 1;
 
-    public ApplicantManagement() {
+    public ApplicantManagement(EmployeeService employeeService) {
         this.applicants = new ArrayList<>();
         this.employeeService = employeeService;
     }

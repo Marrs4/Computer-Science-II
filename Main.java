@@ -3,12 +3,15 @@ import java.util.Scanner;
 public class Main {
     private static MemberManagementPortal memberManagementPortal = new MemberManagementPortal();
     private static EmployeeManagementPortal employeeManagementPortal = new EmployeeManagementPortal();
-    private static ApplicantPortal applicantPortal = new ApplicantPortal(new ApplicantManagement());
-    private static HotelBookingsPortal travelManagementPortal = new HotelBookingsPortal(new ManageMemberBooking(new MemberService()));
+    private static ApplicantPortal applicantPortal = new ApplicantPortal(new ApplicantManagement(new EmployeeService()));
+    private static ManageMemberBooking manageMemberBooking = new ManageMemberBooking(new MemberService());
+    private static HotelBookingsPortal hotelBookingsPortal = new HotelBookingsPortal(manageMemberBooking);
+    private static ChangeHotelRates changeHotelRates = new ChangeHotelRates(120.0);
+    private static AdditionalFee additionalFee = new AdditionalFee();
+    private static TravelManagementPortal travelManagementPortal = new TravelManagementPortal(hotelBookingsPortal, changeHotelRates, additionalFee);
     private static ManageMemberSchedule memberScheduleManager = new ManageMemberSchedule(new MemberService());
     private static ActivityTrainersPortal trainersPortal = new ActivityTrainersPortal();
     private static ActivitySchedulePortal activitySchedulePortal = new ActivitySchedulePortal(memberScheduleManager, trainersPortal);
-
 
     private static Scanner scanner = new Scanner(System.in);
 
@@ -38,7 +41,7 @@ public class Main {
                     applicantPortal.manageApplicant();
                     break;
                 case 4:
-                    travelManagementPortal.manageHotelBookings();
+                    travelManagementPortal.manageTravel();
                     break;
                 case 5:
                     activitySchedulePortal.manageSchedules();

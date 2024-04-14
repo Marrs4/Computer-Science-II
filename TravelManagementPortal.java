@@ -4,6 +4,7 @@ public class TravelManagementPortal {
     private HotelBookingsPortal hotelBookingsPortal;
     private ChangeHotelRates changeHotelRates;
     private AdditionalFee additionalFee;
+    private Scanner scanner = new Scanner(System.in);
 
     public TravelManagementPortal(HotelBookingsPortal hotelBookingsPortal, ChangeHotelRates changeHotelRates, AdditionalFee additionalFee) {
         this.hotelBookingsPortal = hotelBookingsPortal;
@@ -17,7 +18,7 @@ public class TravelManagementPortal {
         while (run) {
             System.out.println("1. Hotel Bookings");
             System.out.println("2. Change Hotel Rates");
-            System.out.println("3. Additional Fee Editor");
+            System.out.println("3. Additional Fees");
             System.out.println("4. Back to main menu");
             System.out.print("Enter your choice: ");
             int choice = getIntInput();
@@ -29,7 +30,7 @@ public class TravelManagementPortal {
                     changeHotelRates.manageHotelRates();
                     break;
                 case 3:
-                    // Logic for managing additional fees
+                    manageAdditionalFee();
                     break;
                 case 4:
                     run = false;
@@ -40,12 +41,23 @@ public class TravelManagementPortal {
         }
     }
 
+    private void manageAdditionalFee() {
+        System.out.println("Managing Additional Fees:");
+        System.out.println("Current Fee Details: " + additionalFee);
+        System.out.print("Enter new amount (Current: $" + additionalFee.getAmount() + "): ");
+        double newAmount = scanner.nextDouble();
+        scanner.nextLine();  // Consume the newline left-over
+        System.out.print("Enter new description: ");
+        String newDescription = scanner.nextLine();
+        additionalFee.setAmount(newAmount);
+        additionalFee.setDescription(newDescription);
+        System.out.println("Updated Fee Details: " + additionalFee);
+    }
+
     private int getIntInput() {
-        Scanner scanner = new Scanner(System.in);
         while (true) {
             try {
-                String input = scanner.nextLine();
-                return Integer.parseInt(input);
+                return Integer.parseInt(scanner.nextLine());
             } catch (NumberFormatException e) {
                 System.out.print("Invalid input. Please enter a number: ");
             }

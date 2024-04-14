@@ -1,38 +1,32 @@
-class AdditionalFee {
+public class AdditionalFee {
     private int feeId;
-    private String feeName;
-    private double amount;
     private String description;
+    private double amount;
+    private String details;
 
-    public AdditionalFee(int feeId, String feeName, double amount, String description) {
-        this.feeId = feeId;
-        this.feeName = feeName;
-        this.amount = amount;
-        this.description = description;
+    // Default constructor
+    public AdditionalFee() {
+        this.feeId = 0;
+        this.description = "Default Description";
+        this.amount = 0.0;
+        this.details = "Default Details";
     }
 
+    // Constructor with parameters
+    public AdditionalFee(int feeId, String description, double amount, String details) {
+        this.feeId = feeId;
+        this.description = description;
+        this.amount = amount;
+        this.details = details;
+    }
+
+    // Getters and setters
     public int getFeeId() {
         return feeId;
     }
 
     public void setFeeId(int feeId) {
         this.feeId = feeId;
-    }
-
-    public String getFeeName() {
-        return feeName;
-    }
-
-    public void setFeeName(String feeName) {
-        this.feeName = feeName;
-    }
-
-    public double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
     }
 
     public String getDescription() {
@@ -43,11 +37,29 @@ class AdditionalFee {
         this.description = description;
     }
 
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
+    }
+
     @Override
     public String toString() {
-        return "Fee ID: " + feeId +
-                ", Fee Name: " + feeName +
-                ", Amount: $" + amount +
-                ", Description: " + description;
+        return "AdditionalFee" +
+                "feeId=" + feeId +
+                ", description='" + description + '\'' +
+                ", amount=" + amount +
+                ", details='" + details + '\'' +
+                ' ';
     }
 }
