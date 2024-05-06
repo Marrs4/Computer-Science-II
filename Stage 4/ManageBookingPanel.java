@@ -2,7 +2,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.util.Date;
+import java.util.List;
 
 public class ManageBookingPanel extends JPanel {
     private JTextField memberIdField, dateField, hotelNameField;
@@ -47,7 +47,6 @@ public class ManageBookingPanel extends JPanel {
         bookingTableModel.addColumn("Date");
         bookingTableModel.addColumn("Hotel Name");
         bookingTableModel.addColumn("Member ID");
-        bookingTableModel.addColumn("Member Name"); // Additional column for member name
         bookingTable = new JTable(bookingTableModel);
         JScrollPane scrollPane = new JScrollPane(bookingTable);
         add(scrollPane, BorderLayout.SOUTH);
@@ -94,9 +93,20 @@ public class ManageBookingPanel extends JPanel {
 
     private void refreshBookingTable() {
         bookingTableModel.setRowCount(0);
-        String[][] bookings = memberBookingManager.getFormattedBookings();
-        for (String[] booking : bookings) {
-            bookingTableModel.addRow(booking);
+        List<BookingEntry> bookings = memberBookingManager.getFormattedBookings();
+        for (BookingEntry entry : bookings) {
+            if (entry != null) {
+                String[] rowData = new String[]{
+                        entry.getDate(),
+                        entry.getHotelName(),
+                        String.valueOf(entry.getMemberId()),
+                        // Additional columns if needed
+                };
+                bookingTableModel.addRow(rowData);
+            } else {
+
+            }
         }
     }
+
 }

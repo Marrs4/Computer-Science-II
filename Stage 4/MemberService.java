@@ -1,18 +1,15 @@
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MemberService {
     private List<Member> members; // List to store members
+    private final String fileName = "members.txt"; // File name to store member data
 
     // Constructor to initialize the list of members
     public MemberService() {
         members = new ArrayList<>();
-        // Add pre-existing members
-        createMember("Alice Johnson", "7890 Pine Rd", "alice.johnson@example.com");
-        createMember("Bob Williams", "4321 Oak St", "bob.williams@example.com");
-        createMember("Charlie Smith", "1234 Maple St", "charlie.smith@example.com");
-        createMember("Diane Adams", "5678 Elm St", "diane.adams@example.com");
-        createMember("Evan Brown", "91011 Birch St", "evan.brown@example.com");
+        loadMembersFromFile(); // Load members from file upon initialization
     }
 
     /**
@@ -28,6 +25,7 @@ public class MemberService {
         Member newMember = new Member(id, name, address, email);
         members.add(newMember);
         System.out.println("New member created with ID: " + id);
+        saveMembersToFile(); // Save members to file after adding a new member
     }
 
     /**
@@ -69,6 +67,7 @@ public class MemberService {
             member.setAddress(address);
             member.setEmail(email);
             System.out.println("Member updated: ID=" + id);
+            saveMembersToFile(); // Save members to file after updating
         } else {
             System.out.println("Member with ID " + id + " not found.");
         }
@@ -84,9 +83,37 @@ public class MemberService {
             if (members.get(i).getId() == id) {
                 members.remove(i);
                 System.out.println("Member with ID " + id + " has been deleted.");
+                saveMembersToFile(); // Save members to file after deletion
                 return;
             }
         }
         System.out.println("Member with ID " + id + " not found. No member was deleted.");
+    }
+
+    /**
+     * Loads members from a file.
+     */
+    private void loadMembersFromFile() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
+            members = (List<Member>) ois.readObject();
+            System.out.println("Members loaded from file.");
+        } catch (FileNotFoundException e) {
+            System.out.println("File '" + fileName + "' not found. Creating a new file.");
+            saveMembersToFile(); // Create a new file
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error loading members from file: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Saves members to a file.
+     */
+    private void saveMembersToFile() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
+            oos.writeObject(members);
+            System.out.println("Members saved to file.");
+        } catch (IOException e) {
+            System.out.println("Error saving members to file: " + e.getMessage());
+        }
     }
 }

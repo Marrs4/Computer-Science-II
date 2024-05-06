@@ -1,27 +1,50 @@
-/**
- * Represents a single booking entry for a member. This class captures all
- * relevant information for a booking, including the date of the booking,
- * the name of the hotel, and the ID of the member who made the booking.
- */
-public class BookingEntry {
-    // Date of the booking
-    String date;
-    // Name of the hotel where the booking is made
-    String hotelName;
-    // ID of the member who made the booking
-    int memberId;
+import java.io.Serializable;
+
+public class BookingEntry implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    private String date; // Date of the booking
+    private String hotelName; // Name of the hotel where the booking is made
+    private int memberId; // ID of the member who made the booking
 
     /**
      * Constructs a new BookingEntry with the specified details.
      *
-     * @param date The date of the booking.
+     * @param date      The date of the booking.
      * @param hotelName The name of the hotel for the booking.
-     * @param memberId The ID of the member who made the booking.
+     * @param memberId  The ID of the member who made the booking.
      */
     public BookingEntry(String date, String hotelName, int memberId) {
         this.date = date;
         this.hotelName = hotelName;
         this.memberId = memberId;
+    }
+
+    /**
+     * Returns the date of the booking.
+     *
+     * @return The date of the booking.
+     */
+    public String getDate() {
+        return date;
+    }
+
+    /**
+     * Returns the name of the hotel where the booking is made.
+     *
+     * @return The name of the hotel.
+     */
+    public String getHotelName() {
+        return hotelName;
+    }
+
+    /**
+     * Returns the ID of the member who made the booking.
+     *
+     * @return The member ID.
+     */
+    public int getMemberId() {
+        return memberId;
     }
 
     /**
@@ -33,10 +56,10 @@ public class BookingEntry {
      */
     @Override
     public String toString() {
-        return "BookingEntry" +
+        return "BookingEntry{" +
                 "date='" + date + '\'' +
                 ", hotelName='" + hotelName + '\'' +
                 ", memberId=" + memberId +
-                ' ';
+                '}';
     }
 }

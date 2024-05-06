@@ -1,102 +1,77 @@
-/**
- * Manages booking entries for members within the club. This class
- * allows for the addition, removal, and viewing of member bookings, such as hotel reservations.
- */
-public class ManageMemberBooking {
-    // Array to store booking entries
-    private final BookingEntry[] bookingEntries = new BookingEntry[100];
-    // Counter to track the current number of bookings
-    private int entryCount = 0;
-    // Reference to the MemberService for accessing member information
-    private final MemberService memberService;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Arrays;
 
-    /**
-     * Constructs a ManageMemberBooking service with a reference to the MemberService.
-     *
-     * @param memberService The MemberService to use for accessing member details.
-     */
+public class ManageMemberBooking implements Serializable {
+    private List<BookingEntry> bookingEntries = new ArrayList<>(); // Use ArrayList instead of array
+    private final MemberService memberService;
+    private final String FILE_NAME = "booking_entries.ser";
+
     public ManageMemberBooking(MemberService memberService) {
         this.memberService = memberService;
+        loadBookingEntriesFromFile();
     }
 
-    /**
-     * Adds a new booking entry for a member.
-     *
-     * @param date The date of the booking.
-     * @param hotelName The name of the hotel where the booking is made.
-     * @param memberId The ID of the member making the booking.
-     */
     public void addBooking(String date, String hotelName, int memberId) {
-        if (entryCount >= bookingEntries.length) {
-            System.out.println("Booking list is full.");
-            return;
-        }
-        bookingEntries[entryCount++] = new BookingEntry(date, hotelName, memberId);
+        bookingEntries.add(new BookingEntry(date, hotelName, memberId)); // Add to the ArrayList
+        saveBookingEntriesToFile();
         System.out.println("Booking added for Member ID: " + memberId + " at " + hotelName + " on " + date);
     }
 
-    /**
-     * Removes a booking entry based on the specified date, hotel name, and member ID.
-     *
-     * @param date The date of the booking to remove.
-     * @param hotelName The name of the hotel of the booking to remove.
-     * @param memberId The ID of the member whose booking is to be removed.
-     */
     public void removeBooking(String date, String hotelName, int memberId) {
-        for (int i = 0; i < entryCount; i++) {
-            BookingEntry entry = bookingEntries[i];
-            if (entry.date.equals(date) && entry.hotelName.equals(hotelName) && entry.memberId == memberId) {
-                System.arraycopy(bookingEntries, i + 1, bookingEntries, i, entryCount - i - 1);
-                bookingEntries[--entryCount] = null;
-                System.out.println("Removed booking for Member ID: " + memberId + " at " + hotelName + " on " + date);
-                return;
+        BookingEntry entryToRemove = null;
+        for (BookingEntry entry : bookingEntries) {
+            if (entry != null && entry.getDate().equals(date) && entry.getHotelName().equals(hotelName) && entry.getMemberId() == memberId) {
+                entryToRemove = entry;
+                break;
             }
         }
-        System.out.println("No matching booking found for removal.");
+        if (entryToRemove != null) {
+            bookingEntries.remove(entryToRemove); // Remove from the ArrayList
+            saveBookingEntriesToFile();
+            System.out.println("Removed booking for Member ID: " + memberId + " at " + hotelName + " on " + date);
+        } else {
+            System.out.println("No matching booking found for removal.");
+        }
     }
 
-    /**
-     * Displays all current bookings, along with member details for each booking.
-     */
+    public List<BookingEntry> getFormattedBookings() {
+        return new ArrayList<>(bookingEntries); // Return a copy of the ArrayList
+    }
     public void viewBookings() {
-        if (entryCount == 0) {
+        if (bookingEntries.isEmpty()) {
             System.out.println("No bookings.");
             return;
         }
         System.out.println("All Bookings:");
-        for (int i = 0; i < entryCount; i++) {
-            BookingEntry entry = bookingEntries[i];
-            Member member = memberService.getMemberById(entry.memberId);
-            if (member != null) {
-                System.out.println(entry + ", Member Details: " + member);
-            } else {
-                System.out.println(entry + ", Member Details: Member ID not found.");
+        for (BookingEntry entry : bookingEntries) {
+            if (entry != null) {
+                Member member = memberService.getMemberById(entry.getMemberId());
+                if (member != null) {
+                    System.out.println(entry + ", Member Details: " + member);
+                } else {
+                    System.out.println(entry + ", Member Details: Member ID not found.");
+                }
             }
         }
     }
-    public String[][] getFormattedBookings() {
-        if (entryCount == 0) {
-            return new String[0][0]; // Return an empty array if there are no bookings
+    private void saveBookingEntriesToFile() {
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(FILE_NAME))) {
+            outputStream.writeObject(bookingEntries.toArray(new BookingEntry[0])); // Convert ArrayList to array
+        } catch (IOException e) {
+            System.err.println("Error saving booking entries to file: " + e.getMessage());
         }
-
-        String[][] formattedBookings = new String[entryCount][4]; // Each booking has 4 columns: Date, Hotel Name, Member ID, Member Name
-
-        for (int i = 0; i < entryCount; i++) {
-            BookingEntry entry = bookingEntries[i];
-            Member member = memberService.getMemberById(entry.memberId);
-
-            formattedBookings[i][0] = entry.date;
-            formattedBookings[i][1] = entry.hotelName;
-            formattedBookings[i][2] = String.valueOf(entry.memberId);
-
-            if (member != null) {
-                formattedBookings[i][3] = member.getName();
-            } else {
-                formattedBookings[i][3] = "Member ID not found";
-            }
-        }
-
-        return formattedBookings;
     }
 
+    private void loadBookingEntriesFromFile() {
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(FILE_NAME))) {
+            BookingEntry[] entries = (BookingEntry[]) inputStream.readObject();
+            bookingEntries = new ArrayList<>(Arrays.asList(entries)); // Convert array to ArrayList
+        } catch (FileNotFoundException e) {
+            System.err.println("No previous booking entries found.");
+        } catch (IOException | ClassNotFoundException e) {
+            System.err.println("Error loading booking entries from file: " + e.getMessage());
+        }
+    }
 }

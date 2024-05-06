@@ -1,37 +1,29 @@
-/**
- * Represents an entry in the schedule of the club's members.
- * This class captures the date and activity for a scheduled event,
- * along with the ID of the member involved. It is used to manage and
- * track individual member schedules within the organization.
- */
-public class ScheduleEntry {
-    // The date of the scheduled activity.
-    String date;
-    // A description or name of the scheduled activity.
-    String activity;
-    // The ID of the member associated with this schedule entry.
-    int memberId;
+import java.io.Serializable;
 
-    /**
-     * Constructs a new ScheduleEntry with the specified details.
-     *
-     * @param date The date of the scheduled activity.
-     * @param activity The description or name of the activity.
-     * @param memberId The ID of the member this entry is for.
-     */
+public class ScheduleEntry implements Serializable {
+    private String date;
+    private String activity;
+    private int memberId;
+
     public ScheduleEntry(String date, String activity, int memberId) {
         this.date = date;
         this.activity = activity;
         this.memberId = memberId;
     }
 
-    /**
-     * Provides a string representation of the schedule entry,
-     * including the date, activity, and member ID. This is helpful
-     * for logging, debugging, or displaying the entry information.
-     *
-     * @return A string representation of the ScheduleEntry.
-     */
+    // Getter methods for date, activity, and memberId
+    public String getDate() {
+        return date;
+    }
+
+    public String getActivity() {
+        return activity;
+    }
+
+    public int getMemberId() {
+        return memberId;
+    }
+
     @Override
     public String toString() {
         return "ScheduleEntry{" +

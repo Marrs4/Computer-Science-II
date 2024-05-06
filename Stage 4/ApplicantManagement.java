@@ -4,7 +4,6 @@ import java.util.List;
 public class ApplicantManagement {
     private List<Applicant> applicants;
     private EmployeeService employeeService;
-    private int applicantCount = 1;
 
     public ApplicantManagement(EmployeeService employeeService) {
         this.applicants = new ArrayList<>();
@@ -41,7 +40,8 @@ public class ApplicantManagement {
         Applicant approvedApplicant = getApplicantByName(applicantName);
 
         if (approvedApplicant != null && approvedApplicant.isApproved()) {
-            employeeService.addEmployee(approvedApplicant.getName(), approvedApplicant.getAddress(), approvedApplicant.getEmail(), 40000);  // Use EmployeeService to add the new employee
+            // Use EmployeeService to add the new employee
+            employeeService.addEmployee(approvedApplicant.getName(), approvedApplicant.getAddress(), approvedApplicant.getEmail(), 40000.0);
 
             System.out.println("Applicant " + applicantName + " has been hired as an employee.");
             deleteApplicant(approvedApplicant);  // Optionally remove the applicant

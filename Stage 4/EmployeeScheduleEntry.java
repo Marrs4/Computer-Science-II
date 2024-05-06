@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.Objects;
 
-public class EmployeeScheduleEntry {
+public class EmployeeScheduleEntry implements Serializable {
     private String date;
     private String activity;
     private int employeeId;

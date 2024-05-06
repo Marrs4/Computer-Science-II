@@ -1,7 +1,8 @@
 /**
  * Represents a member with basic personal information.
  */
-public class Member {
+import java.io.Serializable;
+public class Member implements Serializable{
     private int id;
     private String name;
     private String address;
