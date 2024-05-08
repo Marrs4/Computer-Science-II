@@ -65,11 +65,8 @@ public class ApplicantManagementPanel extends JPanel {
             }
         });
         
-        updateApplicantButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                updateApplicant();
-        }
+        updateApplicantButton.addActionListener((ActionEvent e) -> {
+            updateApplicant();
         });
         
         deleteApplicantButton.addActionListener(new ActionListener() {
@@ -101,7 +98,7 @@ public class ApplicantManagementPanel extends JPanel {
         applicantPortal.createApplicant(name, address, phoneNumber, email);
         JOptionPane.showMessageDialog(this, "Applicant created successfully.");
         
-         // Clear the form fields after successful creation
+         // Clear the fields after successful creation
         nameField.setText("");
         addressField.setText("");
         phoneNumberField.setText("");
@@ -114,7 +111,8 @@ public class ApplicantManagementPanel extends JPanel {
         if (name.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please enter the name of the applicant to update.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
-        } 
+        }
+        name = nameField.getText();
         String address = addressField.getText();
         String phoneNumber = phoneNumberField.getText();
         String email = emailField.getText();
@@ -167,4 +165,3 @@ public class ApplicantManagementPanel extends JPanel {
         }
     }
 }
-
