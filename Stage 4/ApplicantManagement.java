@@ -1,9 +1,11 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.io.*;
 
 public class ApplicantManagement {
     private List<Applicant> applicants;
     private EmployeeService employeeService;
+    private static final String APPLICANT_FILE = "applicants.txt";
 
     public ApplicantManagement(EmployeeService employeeService) {
         this.applicants = new ArrayList<>();
@@ -12,6 +14,7 @@ public class ApplicantManagement {
 
     public void addApplicant(Applicant applicant) {
         applicants.add(applicant);
+        saveApplicantsToFile();
     }
 
     public Applicant getApplicantByName(String name) {
@@ -27,6 +30,7 @@ public class ApplicantManagement {
         for (int i = 0; i < applicants.size(); i++) {
             if (applicants.get(i).getName().equals(updatedApplicant.getName())) {
                 applicants.set(i, updatedApplicant);
+                saveApplicantsToFile();
                 break;
             }
         }
@@ -47,6 +51,21 @@ public class ApplicantManagement {
             deleteApplicant(approvedApplicant);  // Optionally remove the applicant
         } else {
             System.out.println("Applicant " + applicantName + " is not found or not approved.");
+        }
+    }
+    
+    public void saveApplicantsToFile() {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(APPLICANT_FILE))) {
+            for (Applicant applicant : applicants) {
+                // Write each applicant's information in CSV format
+                writer.println(applicant.getName() + "," +
+                             applicant.getAddress() + "," +
+                             applicant.getPhoneNumber() + "," +
+                             applicant.getEmail() + "\n");
+            }
+            System.out.println("Applicants saved to file successfully.");
+        } catch (IOException e) {
+            System.err.println("Error writing to file: " + e.getMessage());
         }
     }
 }
