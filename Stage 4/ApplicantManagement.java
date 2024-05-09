@@ -10,6 +10,7 @@ public class ApplicantManagement {
     public ApplicantManagement(EmployeeService employeeService) {
         this.applicants = new ArrayList<>();
         this.employeeService = employeeService;
+        loadApplicantsFromFile();
     }
 
     public void addApplicant(Applicant applicant) {
@@ -36,21 +37,25 @@ public class ApplicantManagement {
         }
     }
 
+    /** Delete an applicant and save the changes to the file. */
     public void deleteApplicant(Applicant applicant) {
         applicants.remove(applicant);
+        saveApplicantsToFile(); // Save the updated state to the file
     }
 
-    public void approveAndTransferApplicant(String applicantName) {
-        Applicant approvedApplicant = getApplicantByName(applicantName);
+    public void approveAndTransferApplicant(String applicantName, double startingSalary) {
+        Applicant applicant = getApplicantByName(applicantName);
+        if (applicant != null) {
+            // Mark as approved and transfer
+            String employeeMessage = employeeService.addEmployee(applicant.getName(), applicant.getAddress(), applicant.getEmail(), startingSalary);
+            System.out.println(employeeMessage);
 
-        if (approvedApplicant != null && approvedApplicant.isApproved()) {
-            // Use EmployeeService to add the new employee
-            employeeService.addEmployee(approvedApplicant.getName(), approvedApplicant.getAddress(), approvedApplicant.getEmail(), 40000.0);
-
-            System.out.println("Applicant " + applicantName + " has been hired as an employee.");
-            deleteApplicant(approvedApplicant);  // Optionally remove the applicant
+            // Remove the applicant from the applicant list
+            applicants.remove(applicant);
+            saveApplicantsToFile(); // Update the file
+            System.out.println("Applicant " + applicantName + " approved and added to the employee list.");
         } else {
-            System.out.println("Applicant " + applicantName + " is not found or not approved.");
+            System.out.println("Applicant not found or already approved.");
         }
     }
     
@@ -67,5 +72,35 @@ public class ApplicantManagement {
         } catch (IOException e) {
             System.err.println("Error writing to file: " + e.getMessage());
         }
+    }
+    private void loadApplicantsFromFile() {
+        File file = new File(APPLICANT_FILE);
+        if (!file.exists()) {
+            System.out.println("Applicant file not found, starting with an empty list.");
+            return;
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 4 || parts.length == 5) {
+                    String name = parts[0];
+                    String address = parts[1];
+                    String phoneNumber = parts[2];
+                    String email = parts[3];
+
+                    // Ensure the order of parameters matches your `Applicant` constructor
+                    applicants.add(new Applicant(name, address, phoneNumber, email));
+                }
+            }
+            System.out.println("Applicants loaded successfully.");
+        } catch (IOException e) {
+            System.err.println("Error reading from file: " + e.getMessage());
+        }
+    }
+
+    public List<Applicant> getAllApplicants() {
+        return new ArrayList<>(applicants); // Return a copy of the applicants list
     }
 }

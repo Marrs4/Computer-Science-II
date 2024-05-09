@@ -198,11 +198,12 @@ public class EmployeeManagementPanel extends JPanel {
     private void refreshEmployeeIds() {
         idList.setListData(getAllEmployeeIds());
     }
-    
+
+    // Placeholder methods for schedule and review management
     private void manageSchedule() {
-    ManageEmployeeSchedulePanel schedulePanel = new ManageEmployeeSchedulePanel(employeeService);
-    JOptionPane.showMessageDialog(this, schedulePanel, "Manage Employee Schedule", JOptionPane.PLAIN_MESSAGE);
-}
+        ManageEmployeeSchedulePanel schedulePanel = new ManageEmployeeSchedulePanel(employeeService);
+        JOptionPane.showMessageDialog(this, schedulePanel, "Manage Employee Schedule", JOptionPane.PLAIN_MESSAGE);
+    }
 
     private void writeReview() {
         Integer selectedId = idList.getSelectedValue();

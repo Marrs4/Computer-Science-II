@@ -1,73 +1,41 @@
 public class Applicant {
-    private boolean isApproved;
     private String name;
     private String address;
     private String phoneNumber;
     private String email;
+    private boolean approved;
 
-    public Applicant(String name, String address, String phoneNumber, String email) {
-        setName(name);
-        setAddress(address);
-        setPhoneNumber(phoneNumber);
-        setEmail(email);
-        this.isApproved = false; // Initialized to false by default
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setName(String name) {
-        if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException("Name cannot be null or empty.");
-        }
+    // Constructor with approval status
+    public Applicant(String name, String address, String phoneNumber, String email, boolean approved) {
         this.name = name;
-    }
-
-    public void setAddress(String address) {
-        if (address == null || address.isEmpty()) {
-            throw new IllegalArgumentException("Address cannot be null or empty.");
-        }
         this.address = address;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        if (phoneNumber == null || phoneNumber.isEmpty()) {
-            throw new IllegalArgumentException("Phone number cannot be null or empty.");
-        }
         this.phoneNumber = phoneNumber;
-    }
-
-    public void setEmail(String email) {
-        if (email == null || email.isEmpty()) {
-            throw new IllegalArgumentException("Email cannot be null or empty.");
-        }
         this.email = email;
+        this.approved = approved;
     }
 
-    public void setApproved(boolean approved) {
-        this.isApproved = approved;
+    // Constructor without approval status (default to false)
+    public Applicant(String name, String address, String phoneNumber, String email) {
+        this(name, address, phoneNumber, email, false); // Default to "not approved"
     }
 
-    public boolean isApproved() {
-        return isApproved;
-    }
+    // Getters and setters for all fields
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public String getAddress() { return address; }
+    public void setAddress(String address) { this.address = address; }
+
+    public String getPhoneNumber() { return phoneNumber; }
+    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
 
     @Override
     public String toString() {
-        return "Name: " + name + "\n" + "Address: " + address + "\n" + "Phone Number: " +
-                phoneNumber + "\n" + "Email: " + email;
+        return String.format("Name: %s, Address: %s, Phone: %s, Email: %s, Approved: %s",
+                name, address, phoneNumber, email, approved ? "Yes" : "No");
     }
 }

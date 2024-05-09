@@ -15,7 +15,7 @@ public class MainFrame extends JFrame {
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
 
-        // Initialize all panels
+        // Initialize services and panels
         MemberService memberService = new MemberService();
         ManageMembershipFees membershipFeesManager = new ManageMembershipFees();
         ManageMemberSchedule memberScheduleManager = new ManageMemberSchedule(memberService);
@@ -23,7 +23,11 @@ public class MainFrame extends JFrame {
         MemberManagementPanel memberManagementPanel = new MemberManagementPanel(memberService, membershipFeesManager, memberScheduleManager, memberBookingManager);
         EmployeeService employeeService = new EmployeeService();
         EmployeeManagementPanel employeeManagementPanel = new EmployeeManagementPanel(employeeService);
-        ApplicantManagementPanel applicantManagementPanel = new ApplicantManagementPanel();
+        ApplicantManagement applicantManagement = new ApplicantManagement(employeeService);
+        ApplicantPortal applicantPortal = new ApplicantPortal(applicantManagement);
+
+        ApplicantManagementPanel applicantManagementPanel = new ApplicantManagementPanel(applicantPortal);
+
         TravelManagementPanel travelManagementPanel = new TravelManagementPanel();
         ActivitySchedulePanel activitySchedulePanel = new ActivitySchedulePanel();
 
@@ -34,7 +38,7 @@ public class MainFrame extends JFrame {
         mainPanel.add(travelManagementPanel, "TravelManagement");
         mainPanel.add(activitySchedulePanel, "ActivitySchedule");
 
-        // Menu for navigation
+        // Navigation menu
         JMenuBar menuBar = new JMenuBar();
         JMenu navigationMenu = new JMenu("Main Menu");
         menuBar.add(navigationMenu);
@@ -46,7 +50,7 @@ public class MainFrame extends JFrame {
         JMenuItem travelItem = new JMenuItem("Travel Management");
         JMenuItem activityItem = new JMenuItem("Activity Schedule");
 
-        // Add action listeners to menu items
+        // Add action listeners for menu items
         memberItem.addActionListener(e -> cardLayout.show(mainPanel, "MemberManagement"));
         employeeItem.addActionListener(e -> cardLayout.show(mainPanel, "EmployeeManagement"));
         applicantItem.addActionListener(e -> cardLayout.show(mainPanel, "ApplicantManagement"));
