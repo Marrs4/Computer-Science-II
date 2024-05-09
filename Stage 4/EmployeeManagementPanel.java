@@ -6,31 +6,35 @@ import java.util.List;
 
 public class EmployeeManagementPanel extends JPanel {
     private JList<Integer> idList;
+    private DefaultListModel<Integer> idListModel; // Use DefaultListModel to manage the employee IDs
     private JTextField nameField, addressField, emailField, salaryField, reviewField;
     private JButton createButton, viewButton, updateButton, deleteButton, scheduleButton, reviewButton;
-    private EmployeeService employeeService;
+    private final EmployeeService employeeService;
 
     public EmployeeManagementPanel(EmployeeService employeeService) {
         this.employeeService = employeeService;
-        initializeUI();
+        initializeUI(); // Initialize the UI components
     }
 
     private void initializeUI() {
         setLayout(new BorderLayout());
         JPanel formPanel = new JPanel(new GridLayout(0, 2, 10, 10));
 
-        // Create the ID list and wrap it in a scroll pane
-        idList = new JList<>(getAllEmployeeIds());
+        // Initialize the list model and the JList
+        idListModel = new DefaultListModel<>();
+        idList = new JList<>(idListModel);
         JScrollPane idScrollPane = new JScrollPane(idList);
 
-        // Initialize other text fields
+        // Load all initial employee IDs
+        updateListModel();
+
+        // Initialize the remaining form fields
         nameField = new JTextField();
         addressField = new JTextField();
         emailField = new JTextField();
         salaryField = new JTextField();
         reviewField = new JTextField();
 
-        // Add fields and labels to the form panel
         formPanel.add(new JLabel("Employee ID:"));
         formPanel.add(idScrollPane);
         formPanel.add(new JLabel("Name:"));
@@ -52,7 +56,6 @@ public class EmployeeManagementPanel extends JPanel {
         scheduleButton = new JButton("Manage Schedule");
         reviewButton = new JButton("Write Review");
 
-        // Add buttons to the button panel
         buttonPanel.add(createButton);
         buttonPanel.add(viewButton);
         buttonPanel.add(updateButton);
@@ -60,11 +63,9 @@ public class EmployeeManagementPanel extends JPanel {
         buttonPanel.add(scheduleButton);
         buttonPanel.add(reviewButton);
 
-        // Add panels to the main layout
         add(formPanel, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
 
-        // Action listeners for buttons
         createButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -108,13 +109,23 @@ public class EmployeeManagementPanel extends JPanel {
         });
     }
 
-    // Helper method to get all employee IDs
-    private Integer[] getAllEmployeeIds() {
-        List<Integer> ids = employeeService.getAllEmployeeIds(); // Implement this in EmployeeService
-        return ids.toArray(new Integer[0]);
+    // Helper method to update the list model with all employee IDs
+    private void updateListModel() {
+        List<Integer> ids = employeeService.getAllEmployeeIds();
+        idListModel.clear(); // Clear the existing data
+        for (Integer id : ids) {
+            idListModel.addElement(id);
+        }
+
+        // Ensure the JList is repainted
+        idList.repaint();
     }
 
-    // Method to create a new employee
+    // Refresh the employee ID list
+    public void refreshEmployeeIds() {
+        updateListModel();
+    }
+
     private void createEmployee() {
         String name = nameField.getText().trim();
         String address = addressField.getText().trim();
@@ -137,8 +148,7 @@ public class EmployeeManagementPanel extends JPanel {
         String result = employeeService.addEmployee(name, address, email, salary);
         JOptionPane.showMessageDialog(this, result);
 
-        // Clear the form fields after successful creation
-        refreshEmployeeIds();
+        refreshEmployeeIds(); // Update the employee list after creation
         nameField.setText("");
         addressField.setText("");
         emailField.setText("");
@@ -146,7 +156,6 @@ public class EmployeeManagementPanel extends JPanel {
         reviewField.setText("");
     }
 
-    // Method to view an employee by the selected ID in the list
     private void viewEmployee() {
         Integer selectedId = idList.getSelectedValue();
         if (selectedId != null) {
@@ -166,7 +175,6 @@ public class EmployeeManagementPanel extends JPanel {
         }
     }
 
-    // Method to update an employee's information
     private void updateEmployee() {
         Integer selectedId = idList.getSelectedValue();
         if (selectedId != null) {
@@ -182,7 +190,6 @@ public class EmployeeManagementPanel extends JPanel {
         }
     }
 
-    // Method to delete an employee
     private void deleteEmployee() {
         Integer selectedId = idList.getSelectedValue();
         if (selectedId != null) {
@@ -194,12 +201,6 @@ public class EmployeeManagementPanel extends JPanel {
         }
     }
 
-    // Method to refresh the employee ID list
-    private void refreshEmployeeIds() {
-        idList.setListData(getAllEmployeeIds());
-    }
-
-    // Placeholder methods for schedule and review management
     private void manageSchedule() {
         ManageEmployeeSchedulePanel schedulePanel = new ManageEmployeeSchedulePanel(employeeService);
         JOptionPane.showMessageDialog(this, schedulePanel, "Manage Employee Schedule", JOptionPane.PLAIN_MESSAGE);
