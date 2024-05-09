@@ -1,1 +1,5 @@
-I created the GUI for the Main class called MainFrame.java. I also created the GUI for the Employee Management and Member Management portals. I updated the UML Diagram. I created the JAR file. I ensured that the classes my team mates created integrated properly with the MainFrame class. 
+I created the GUI for the Main class called MainFrame.java. 
+I also created the GUI for the Employee Management and Member Management portals. 
+I updated the UML Diagram. I created the JAR file. 
+I ensured that the classes my team mates created integrated properly with the MainFrame class. 
+I updated the User Guide.
