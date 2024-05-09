@@ -7,7 +7,7 @@ public class TravelManagementPanel extends JPanel {
     private ChangeHotelRatesPanel changeHotelRatesPanel;
     private AdditionalFeePanel additionalFeePanel;
 
-    public TravelManagementPanel(ChangeHotelRates changeHotelRates, AdditionalFee additionalFee) {
+    public TravelManagementPanel(ChangeHotelRates changeHotelRates, AdditionalFee additionalFee, MemberService memberService) {
         setLayout(new BorderLayout());
 
         // Create buttons
@@ -17,7 +17,7 @@ public class TravelManagementPanel extends JPanel {
         backButton = new JButton("Back");
 
         // Create panels
-        HotelBookingsPortalPanel hotelBookingsPanel = new HotelBookingsPortalPanel();
+        HotelBookingsPortalPanel hotelBookingsPanel = new HotelBookingsPortalPanel(memberService);
         changeHotelRatesPanel = new ChangeHotelRatesPanel(changeHotelRates, this);
         additionalFeePanel = new AdditionalFeePanel(additionalFee, this);
 
