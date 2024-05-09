@@ -39,7 +39,7 @@ public class HotelBookingsPortal {
         }
     }
 
-    private void makeBooking() {
+    public void makeBooking() {
         System.out.println("Making a new booking...");
         // Placeholder logic for making a booking
         System.out.print("Enter date (YYYY-MM-DD): ");
@@ -51,7 +51,7 @@ public class HotelBookingsPortal {
         memberBookingManager.addBooking(date, hotelName, memberId);
     }
 
-    private void cancelBooking() {
+    public void cancelBooking() {
         System.out.println("Canceling a booking...");
         // Placeholder logic for canceling a booking
         System.out.print("Enter date (YYYY-MM-DD): ");
@@ -63,7 +63,7 @@ public class HotelBookingsPortal {
         memberBookingManager.removeBooking(date, hotelName, memberId);
     }
 
-    private void viewBookings() {
+    public void viewBookings() {
         System.out.println("Viewing bookings...");
         memberBookingManager.viewBookings();
     }

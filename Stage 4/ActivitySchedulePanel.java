@@ -3,40 +3,37 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class ActivitySchedulePanel extends JPanel {
-    private JButton addScheduleButton, updateScheduleButton, removeScheduleButton, viewSchedulesButton, manageTrainersButton, backButton;
     private JTextArea displayArea;
+    private JButton addScheduleButton;
+    private JButton backButton;
+    private JButton manageTrainersButton;
+    private JButton viewSchedulesButton;
+    private JButton removeScheduleButton;
+    private JButton updateScheduleButton;
 
     public ActivitySchedulePanel() {
         setLayout(new BorderLayout());
 
         // Button Panel
         JPanel buttonPanel = new JPanel(new GridLayout(6, 1, 10, 10));
-        addScheduleButton = new JButton("Add Schedule");
-        updateScheduleButton = new JButton("Update Schedule");
-        removeScheduleButton = new JButton("Remove Schedule");
-        viewSchedulesButton = new JButton("View Schedules");
-        manageTrainersButton = new JButton("Manage Trainers");
-        backButton = new JButton("Back to Main Menu");
+        JButton addScheduleButton = new JButton("Add Schedule");
+        JButton updateScheduleButton = new JButton("Update Schedule");
+        JButton removeScheduleButton = new JButton("Remove Schedule");
+        JButton viewSchedulesButton = new JButton("View Schedules");
+        JButton manageTrainersButton = new JButton("Manage Trainers");
+        JButton backButton = new JButton("Back to Main Menu");
 
         buttonPanel.add(addScheduleButton);
         buttonPanel.add(updateScheduleButton);
         buttonPanel.add(removeScheduleButton);
         buttonPanel.add(viewSchedulesButton);
         buttonPanel.add(manageTrainersButton);
-
+        buttonPanel.add(backButton);
 
         // Display Area
         displayArea = new JTextArea(10, 30);
         displayArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(displayArea);
-
-        // Action Listeners
-        addScheduleButton.addActionListener(this::addSchedule);
-        updateScheduleButton.addActionListener(this::updateSchedule);
-        removeScheduleButton.addActionListener(this::removeSchedule);
-        viewSchedulesButton.addActionListener(this::viewSchedules);
-        manageTrainersButton.addActionListener(this::manageTrainers);
-
 
         // Add components to panel
         add(buttonPanel, BorderLayout.WEST);
@@ -44,26 +41,43 @@ public class ActivitySchedulePanel extends JPanel {
 
         // Styling
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-    }
 
-    private void addSchedule(ActionEvent e) {
-        displayArea.setText("Adding a new schedule...\n");
-    }
+        // Action Listeners
+        addScheduleButton.addActionListener(e -> {
+            String input = JOptionPane.showInputDialog(this, "Enter new schedule:");
+            if (input != null && !input.isEmpty()) {
+                displayArea.append("Added Schedule: " + input + "\n");
+            }
+        });
 
-    private void updateSchedule(ActionEvent e) {
-        displayArea.setText("Updating a schedule...\n");
-    }
+        updateScheduleButton.addActionListener(e -> {
+            String input = JOptionPane.showInputDialog(this, "Enter schedule to update:");
+            if (input != null && !input.isEmpty()) {
+                displayArea.append("Updated Schedule: " + input + "\n");
+            }
+        });
 
-    private void removeSchedule(ActionEvent e) {
-        displayArea.setText("Removing a schedule...\n");
-    }
+        removeScheduleButton.addActionListener(e -> {
+            String input = JOptionPane.showInputDialog(this, "Enter schedule to remove:");
+            if (input != null && !input.isEmpty()) {
+                displayArea.append("Removed Schedule: " + input + "\n");
+            }
+        });
 
-    private void viewSchedules(ActionEvent e) {
-        displayArea.setText("Viewing all schedules...\n");
-    }
+        viewSchedulesButton.addActionListener(e -> {
+            // Simulate viewing schedules
+            displayArea.append("Viewing all schedules...\n");
+        });
 
-    private void manageTrainers(ActionEvent e) {
-        displayArea.setText("Managing trainers...\n");
-    }
+        manageTrainersButton.addActionListener(e -> {
+            // Simulate managing trainers
+            displayArea.append("Managing trainers...\n");
+        });
 
+        backButton.addActionListener(e -> {
+            // Handle back button action, navigate back to the main menu or previous screen
+            // For example, you can use CardLayout to switch panels
+            // cardLayout.show(mainPanel, "MainMenuPanel"); // Assuming mainPanel is a reference to the main panel
+        });
+    }
 }

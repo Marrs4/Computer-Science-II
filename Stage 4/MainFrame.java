@@ -1,10 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-
 public class MainFrame extends JFrame {
-    private JPanel mainPanel;
-    private CardLayout cardLayout;
+    private final JPanel mainPanel;
+    private final CardLayout cardLayout;
+    private AdditionalFee additionalFee;
+    private ChangeHotelRates changeHotelRates;
 
     public MainFrame() {
         setTitle("Club Management System");
@@ -15,7 +16,7 @@ public class MainFrame extends JFrame {
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
 
-        // Initialize services and panels
+        // Initialize all panels
         MemberService memberService = new MemberService();
         ManageMembershipFees membershipFeesManager = new ManageMembershipFees();
         ManageMemberSchedule memberScheduleManager = new ManageMemberSchedule(memberService);
@@ -23,13 +24,11 @@ public class MainFrame extends JFrame {
         MemberManagementPanel memberManagementPanel = new MemberManagementPanel(memberService, membershipFeesManager, memberScheduleManager, memberBookingManager);
         EmployeeService employeeService = new EmployeeService();
         EmployeeManagementPanel employeeManagementPanel = new EmployeeManagementPanel(employeeService);
-        ApplicantManagement applicantManagement = new ApplicantManagement(employeeService);
-        ApplicantPortal applicantPortal = new ApplicantPortal(applicantManagement);
-
-        ApplicantManagementPanel applicantManagementPanel = new ApplicantManagementPanel(applicantPortal);
-
-        TravelManagementPanel travelManagementPanel = new TravelManagementPanel();
-        ActivitySchedulePanel activitySchedulePanel = new ActivitySchedulePanel();
+        ApplicantManagementPanel applicantManagementPanel = new ApplicantManagementPanel();
+        ChangeHotelRates changeHotelRates = new ChangeHotelRates(100.0);
+        AdditionalFee additionalFee = new AdditionalFee(1, "Membership Fee", 50.0, "Monthly fee for club membership");
+        TravelManagementPanel travelManagementPanel = new TravelManagementPanel(changeHotelRates, additionalFee);
+        ActivitySchedulePanel activitySchedulePanel = new ActivitySchedulePanel(); // Pass mainPanel as an argument
 
         // Add panels to the card layout
         mainPanel.add(memberManagementPanel, "MemberManagement");
@@ -38,7 +37,7 @@ public class MainFrame extends JFrame {
         mainPanel.add(travelManagementPanel, "TravelManagement");
         mainPanel.add(activitySchedulePanel, "ActivitySchedule");
 
-        // Navigation menu
+        // Menu for navigation
         JMenuBar menuBar = new JMenuBar();
         JMenu navigationMenu = new JMenu("Main Menu");
         menuBar.add(navigationMenu);
@@ -50,7 +49,7 @@ public class MainFrame extends JFrame {
         JMenuItem travelItem = new JMenuItem("Travel Management");
         JMenuItem activityItem = new JMenuItem("Activity Schedule");
 
-        // Add action listeners for menu items
+        // Add action listeners to menu items
         memberItem.addActionListener(e -> cardLayout.show(mainPanel, "MemberManagement"));
         employeeItem.addActionListener(e -> cardLayout.show(mainPanel, "EmployeeManagement"));
         applicantItem.addActionListener(e -> cardLayout.show(mainPanel, "ApplicantManagement"));

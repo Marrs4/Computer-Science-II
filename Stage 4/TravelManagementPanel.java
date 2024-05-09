@@ -4,46 +4,48 @@ import java.awt.*;
 public class TravelManagementPanel extends JPanel {
     private JButton hotelBookingsButton, changeRatesButton, additionalFeeButton, backButton;
 
-    public TravelManagementPanel() {
-        setLayout(new BorderLayout());
-        JPanel buttonPanel = new JPanel(new GridLayout(4, 1, 10, 10)); // Grid layout with 4 rows
+    private ChangeHotelRatesPanel changeHotelRatesPanel;
+    private AdditionalFeePanel additionalFeePanel;
 
-        // Initialize buttons
+    public TravelManagementPanel(ChangeHotelRates changeHotelRates, AdditionalFee additionalFee) {
+        setLayout(new BorderLayout());
+
+        // Create buttons
         hotelBookingsButton = new JButton("Manage Hotel Bookings");
         changeRatesButton = new JButton("Change Hotel Rates");
         additionalFeeButton = new JButton("Edit Additional Fees");
+        backButton = new JButton("Back");
 
+        // Create panels
+        HotelBookingsPortalPanel hotelBookingsPanel = new HotelBookingsPortalPanel();
+        changeHotelRatesPanel = new ChangeHotelRatesPanel(changeHotelRates, this);
+        additionalFeePanel = new AdditionalFeePanel(additionalFee, this);
 
-        // Add buttons to panel
+        // Set initial panel
+        JPanel currentPanel = hotelBookingsPanel;
+        add(currentPanel, BorderLayout.CENTER);
+
+        // Add action listeners to buttons
+        hotelBookingsButton.addActionListener(e -> showPanel(hotelBookingsPanel));
+        changeRatesButton.addActionListener(e -> showPanel(changeHotelRatesPanel));
+        additionalFeeButton.addActionListener(e -> showPanel(additionalFeePanel));
+        backButton.addActionListener(e -> showPanel(hotelBookingsPanel)); // Back button to go back to hotel bookings panel
+
+        // Add buttons to button panel
+        JPanel buttonPanel = new JPanel(new GridLayout(4, 1, 10, 10));
         buttonPanel.add(hotelBookingsButton);
         buttonPanel.add(changeRatesButton);
         buttonPanel.add(additionalFeeButton);
+        buttonPanel.add(backButton);
 
-
-        // Add action listeners (placeholders for actual functionality)
-        hotelBookingsButton.addActionListener(e -> manageHotelBookings());
-        changeRatesButton.addActionListener(e -> changeHotelRates());
-        additionalFeeButton.addActionListener(e -> manageAdditionalFees());
-
-
-        // Styling options
-        buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        add(buttonPanel, BorderLayout.CENTER);
+        // Add button panel to the left
+        add(buttonPanel, BorderLayout.WEST);
     }
 
-    private void manageHotelBookings() {
-        // Placeholder functionality
-        System.out.println("Opening hotel bookings management...");
+    private void showPanel(JPanel panel) {
+        removeAll(); // Remove all components
+        add(panel, BorderLayout.CENTER); // Add new panel
+        revalidate(); // Refresh layout
+        repaint();
     }
-
-    private void changeHotelRates() {
-        // Placeholder functionality
-        System.out.println("Changing hotel rates...");
-    }
-
-    private void manageAdditionalFees() {
-        // Placeholder functionality
-        System.out.println("Managing additional fees...");
-    }
-
 }

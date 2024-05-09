@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<com.intellij.uiDesigner.core.GridLayoutManager xmlns:form="http://www.intellij.com/uidesigner/form/2" xmlns:data="http://www.intellij.com/uidesigner/form/2" xmlns:binding="http://www.intellij.com/bindings/2" xmlns:util="http://www.intellij.com/uidesigner/util/2" xmlns="http://www.intellij.com/uidesigner/form/2" columns="1" hGap="5" vGap="5">
+  <addRow rowAlignment="center" rowResizable="true" vAlignment="center">
+    <component class="javax.swing.JButton" id="makeBookingButton">
+      <constraints>
+        <grid row="0" column="0"/>
+      </constraints>
+    </component>
+  </addRow>
+  <addRow rowAlignment="center" rowResizable="true" vAlignment="center">
+    <component class="javax.swing.JButton" id="cancelBookingButton">
+      <constraints>
+        <grid row="1" column="0"/>
+      </constraints>
+    </component>
+  </addRow>
+  <addRow rowAlignment="center" rowResizable="true" vAlignment="center">
+    <component class="javax.swing.JButton" id="viewBookingsButton">
+      <constraints>
+        <grid row="2" column="0"/>
+      </constraints>
+    </component>
+  </addRow>
+</com.intellij.uiDesigner.core.GridLayoutManager>
