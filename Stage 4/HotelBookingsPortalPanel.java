@@ -6,8 +6,8 @@ import java.awt.event.ActionListener;
 public class HotelBookingsPortalPanel extends JPanel {
     private HotelBookingsPortal bookingsPortal;
 
-    public HotelBookingsPortalPanel() {
-        bookingsPortal = new HotelBookingsPortal(new ManageMemberBooking());
+    public HotelBookingsPortalPanel(MemberService memberService) {
+        bookingsPortal = new HotelBookingsPortal(new ManageMemberBooking(memberService));
 
         JButton makeBookingButton = new JButton("Make a booking");
         JButton cancelBookingButton = new JButton("Cancel a booking");
