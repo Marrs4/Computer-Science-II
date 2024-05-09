@@ -30,7 +30,7 @@ public class MainFrame extends JFrame {
         
         ChangeHotelRates changeHotelRates = new ChangeHotelRates(100.0);
         AdditionalFee additionalFee = new AdditionalFee(1, "Membership Fee", 50.0, "Monthly fee for club membership");
-        TravelManagementPanel travelManagementPanel = new TravelManagementPanel(changeHotelRates, additionalFee);
+        TravelManagementPanel travelManagementPanel = new TravelManagementPanel(changeHotelRates, additionalFee, memberService);
         ActivitySchedulePanel activitySchedulePanel = new ActivitySchedulePanel(); // Pass mainPanel as an argument
 
         // Add panels to the card layout
