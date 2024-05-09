@@ -22,9 +22,12 @@ public class MainFrame extends JFrame {
         ManageMemberSchedule memberScheduleManager = new ManageMemberSchedule(memberService);
         ManageMemberBooking memberBookingManager = new ManageMemberBooking(memberService);
         MemberManagementPanel memberManagementPanel = new MemberManagementPanel(memberService, membershipFeesManager, memberScheduleManager, memberBookingManager);
-        EmployeeService employeeService = new EmployeeService();
+        EmployeeService employeeService = new EmployeeService(); // Replace with an appropriate instance
+        ApplicantManagement applicantManagement = new ApplicantManagement(employeeService);
+        ApplicantPortal applicantPortal = new ApplicantPortal(applicantManagement);
         EmployeeManagementPanel employeeManagementPanel = new EmployeeManagementPanel(employeeService);
-        ApplicantManagementPanel applicantManagementPanel = new ApplicantManagementPanel();
+        ApplicantManagementPanel applicantManagementPanel = new ApplicantManagementPanel(applicantPortal);
+        
         ChangeHotelRates changeHotelRates = new ChangeHotelRates(100.0);
         AdditionalFee additionalFee = new AdditionalFee(1, "Membership Fee", 50.0, "Monthly fee for club membership");
         TravelManagementPanel travelManagementPanel = new TravelManagementPanel(changeHotelRates, additionalFee);
@@ -69,6 +72,7 @@ public class MainFrame extends JFrame {
 
         setJMenuBar(menuBar);
         add(mainPanel);
+        applicantPortal.setEmployeeManagementPanel(employeeManagementPanel);
     }
 
     private void exitApplication(ActionEvent e) {
